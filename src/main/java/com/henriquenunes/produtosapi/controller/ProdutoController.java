@@ -3,6 +3,8 @@ package com.henriquenunes.produtosapi.controller;
 import com.henriquenunes.produtosapi.model.Produto;
 import com.henriquenunes.produtosapi.repository.ProdutoRepository;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,6 +34,17 @@ public class ProdutoController {
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") String id){
         produtoRepository.deleteById(id);
+    }
+
+    @PutMapping("{id}")
+    public void atualizar(@PathVariable("id")String id, @RequestBody Produto produto) {
+        produto.setId(id);
+        produtoRepository.save(produto);
+    }
+
+    @GetMapping
+    public List<Produto> buscarProdutos(@RequestParam("nome") String nome){
+        return produtoRepository.findByNome(nome);
     }
 
 }

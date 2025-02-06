@@ -3,8 +3,6 @@ package com.henriquenunes.produtosapi.controller;
 import com.henriquenunes.produtosapi.model.Produto;
 import com.henriquenunes.produtosapi.repository.ProdutoRepository;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -26,9 +24,9 @@ public class ProdutoController {
         return produto;
     }
 
-    public Produto obterProdutoPorId(String id) {
-        Optional<Produto> produto = produtoRepository.findById(id);
-        return produto.isPresent() ? produto.get() : null;
+    @GetMapping("{id}")
+    public Produto obterProdutoPorId(@PathVariable("id") String id) {
+        return produtoRepository.findById(id).orElse(null);
     }
 
 }
